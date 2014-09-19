@@ -1,7 +1,7 @@
 ofBook
 ======
 
-this is a collaboratively written openFrameworks book.  
+This is a collaboratively written openFrameworks book.  
 
 **please note that this is still work-in-progress**
 
