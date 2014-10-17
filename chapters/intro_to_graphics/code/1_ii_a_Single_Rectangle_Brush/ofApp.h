@@ -1,8 +1,7 @@
 // =============================================================================
 //
-// Source code for section 1.ii.b. Bursting Rectangle Brush from the
-// Introduction to Graphics chapter of ofBook
-// (https://github.com/openframeworks/ofBook).
+// Source code for section 1.ii.a. Single Rectangle Brush from the Introduction
+// to Graphics chapter of ofBook (https://github.com/openframeworks/ofBook).
 //
 // Copyright (c) 2014 Michael Hadley, mikewesthad.com
 //
@@ -46,7 +45,4 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-
-		bool isLeftMousePressed;
-
 };

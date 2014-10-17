@@ -25,22 +25,15 @@
 //
 // =============================================================================
 
-#include "ofApp.h"
-
-//--------------------------------------------------------------
-void ofApp::setup(){
-    ofEnableAntiAliasing();
+void setup() {
+	ofSetWindowShape(800, 350);	
+	ofEnableAntiAliasing(); // This is enabled by default	
+    ofSetCircleResolution(50); // For smoother looking circles + ellipses
 }
 
-//--------------------------------------------------------------
-void ofApp::update(){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::draw(){
-    ofBackground(0);  // Clear the screen with a black color
-    ofSetColor(255);  // Set the drawing color to white
+void draw() {	
+	ofBackground(0); // Clear the screen with a black color
+    ofSetColor(255); // Set the drawing color to white
 
     ofFill(); // If we omit this and leave ofNoFill(), all the shapes will be outlines!
     ofSetLineWidth(2); // Line width is a default value of 1 if you don't modify it
@@ -59,6 +52,7 @@ void ofApp::draw(){
 
     ofNoFill(); // If we omit this and leave ofFill(), all the shapes will be filled!
     ofSetLineWidth(4.5); // A higher value will render thicker lines
+    // Note: Using ofSetLineWidth is tricky - it doesn't work with all graphics cards!
 
     // Draw some shapes (shifted down 150 pixels)
     ofRect(50, 200, 100, 100);
@@ -71,49 +65,4 @@ void ofApp::draw(){
     //for (int i=0; i<11; i++) {
 	//	ofLine(650, 50+(i*10), 750, 75+(i*5));
 	//}
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
-
 }

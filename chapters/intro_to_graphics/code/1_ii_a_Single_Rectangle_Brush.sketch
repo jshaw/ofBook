@@ -25,27 +25,40 @@
 //
 // =============================================================================
 
-#pragma once
+void setup() {	
+	ofSetWindowShape(1024,768);
+	
+    ofSetBackgroundAuto(false); // Stop the background from being redrawn each frame    
+    // We still want to draw on a black background, so we need to draw
+    // the background before we do anything with the brush
+    ofBackground(0);
+}
 
-#include "ofMain.h"
+void draw() {	
+    // If the left mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
+        // Randomness!
+        float randomColor = ofRandom(50, 255);
+        ofSetColor(randomColor); // Exclude dark grayscale values (0 - 50) that won't show on black background
 
-class ofApp : public ofBaseApp{
+        ofSetRectMode(OF_RECTMODE_CENTER); // Draw rect by specifying the center
+        ofRect(ofGetMouseX(), ofGetMouseY(), 50, 50); // Draw a 50 x 50 rect centered over the mouse    
+    }
+        
+    // If the right mouse button is pressed...
+    if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
+        ofBackground(0);  // Erase the screen with a black background
+    }
+}
 
-	public:
-		void setup();
-		void update();
-		void draw();
+// This code is from section 1.ii.f.  It allows us to save a screenshot by pressing the 's' key:
+void keyPressed(int key){
+    if (key == 's') {
+        // HACK: only needed on windows, when using ofSetAutoBackground(false)
+        glReadBuffer(GL_FRONT);
 
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-
-		bool isLeftMousePressed;
-
-};
+        // We use the timestamp here so that you can save multiple images without
+        // overriding previous screenshots (i.e. each file has a unique name)
+        ofSaveScreen("savedScreenshot_"+ofGetTimestampString()+".png");
+    }
+}
