@@ -37,7 +37,7 @@ Internally the computer doens't really now about that memory area as `i` but as 
 
 When we create a variable like `int i` we are telling our program to reserve 4 bytes of memory, associate the address of the first byte of those 4 to the variable name `i` and restrict the type of data that we are going to store in those 4 bytes to only ints.
 
-<img src="images/int_i.svg" height="300"/>
+![Int i](images/int_i.svg "")
 
 Usually memory addresses are represented in [hexadecimal](http://en.wikipedia.org/wiki/Hexadecimal). In c++ you can get the memory address of a variable by using the `&` operator, like:
 
@@ -55,7 +55,7 @@ i = 0;
 
 Our memory will look like:
 
-<img src="images/int_i_equals_0.svg" height="300"/>
+![Int i equals 0](images/int_i_equals_0.svg "")
 
 The order in which the bytes that form the int are layed out in the memory depends on the architecture of our computer, you'll prpbably seen [little endian and big endian](http://en.wikipedia.org/wiki/Endianness) mentioned sometime. Those terms refer to how the bytes of a data type are ordered in memory, if the most significative bytes come first or last. Most of the time we don't really need to know about this order but most modern computer architectures use little endian.
 
@@ -156,9 +156,9 @@ int * p = &i;
 
 And what we get in memory is something like:
 
-<img src="images/pointer.svg" height="300"/>
+![Pointer](images/pointer.svg "")
 
-A pointer usually occupies 4/8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.
+A pointer usually occupies 4 or 8 bytes (depending if we are on a 32 or 64bits application), we are representing it as 1 byte only to make things easier to understand, but as you can see it's just another variable, that instead of containing a value contains a memory address that points to a value. That's why it's called pointer.
 
 A pointer can point to heap or stack memory.
 
@@ -169,13 +169,13 @@ int i;
 ```
 We get a memory layout like:
 
-<img src="images/int_i.svg" height="300"/>
+![Int i](images/int_i.svg "")
 
 As we see there's no value in that memory area yet. In other languages like processing doing something like:
 
 ```java
 int i;
-println(i)
+println(i);
 ```
 
 is illegal, the compiler will tell us that we are trying to use a variable that is not initialized. In c++ though, that's perfectly legal but the contents of that variable are undefined. Most of the times we'll get 0 because the operating system will clear the memory before assigning it to our program, again, for security reasons. But if we are resuing memory that we had already assigned, then, that memory area will contain anything, and the results of our program will be undefined.
@@ -278,7 +278,7 @@ In both languages the `=` means copy the value of the right side into the variab
 
 This is more or less what memory would look like in Java and C++:
 
-<img src="images/objects_java_c.svg" height="300"/>
+![Objects Java C](images/objects_java_c.svg "")
 
 As you can see in c++ objects in memory are just all their member variables one after another. When we make an object variable equal to another, by default, c++ copies all the object to the left side of the equal operator.
 
@@ -309,8 +309,7 @@ p2 = p1;
 
 Well as before c++ will copy the contents of p1 on p2, the contents of p1 are an ofVec2f which consits of 2 floats x and y and then a pointer to a ParticleSystem, and that'w what gets copied, the ParticleSystem itself won't get copied only the pointer to it, so p2 will end up having a copy of the position of p2 and a pointer to the same ParticleSystem but we'll have only 1 particle system.
 
-
-<img src="images/object_pointers.svg" height="300"/>
+![Object pointers](images/object_pointers.svg "")
 
 The fact that things are copied by default and that objects can be stored in the stack as oposed to being always a pointer has certain adavantages. For example, in c++ a vector or an array of particles like the ones we've used in the last example will look like:
 
@@ -385,13 +384,13 @@ moveParticle(&p1);
 Now, here's something new, notice how to refer to the variables of a pointer to an object instead of using the dot, we use the `->` operator, everytime we want to access a variable in a pointer to an object instead of having to dereference it like:
 
 ```cpp
-(*p).x +=10
+(*p).x +=10;
 ```
 
 we can use the `->`
 
 ```cpp
-p->x += 10
+p->x += 10;
 ```
 
 So that solves our problem, using a pointer instead of passing a copy of the object, we are passing a reference to it, it's memory address, so the function will actually modify the original.
@@ -476,7 +475,7 @@ but trying to change the reference itself like in:
 ```cpp
 ofVec2f & pos = p.pos;
 pos.x = 5;
-pos = p2.pos  // error, a reference can only be asigned on it's declaration
+pos = p2.pos;  // error, a reference can only be asigned on it's declaration
 ```
 
 Also you can return a reference but depending on what that reference it's pointing to it can be a bad idea:
@@ -492,7 +491,7 @@ ofVec2f & averagePosition(const vector<Particle> & ps){
 }
 ```
 
-Will actually compile but will probably result in a segmentation fault at some point or even just work but we'll get weird values when calling this funciton. The problem is that we are creating the variable `average` in the stack so when the function returns it'll be *deleted* from memory, the reference we return will be pointing to a memory area that is not reserved anymore for average and as soon as it gets overwritten we'll get invalid values or a pointer to a memory area that doesn't belong to our program anymore.
+Will actually compile but will probably result in a segmentation fault at some point or even just work but we'll get weird values when calling this function. The problem is that we are creating the variable `average` in the stack so when the function returns it'll be *deleted* from memory, the reference we return will be pointing to a memory area that is not reserved anymore for average and as soon as it gets overwritten we'll get invalid values or a pointer to a memory area that doesn't belong to our program anymore.
 
 This is one of the most annoying problems in c++ it's called dangling pointers or in this case references and it's caused when we have a pointer or a reference that points to a memory area that is later freed somehow.
 
@@ -598,7 +597,7 @@ the same as with any other type, the previous declaration already reserves memor
 ```cpp
 int arr[10];
 arr[0] = 5;
-int a = arr[0]
+int a = arr[0];
 ```
 
 if we try to do:
@@ -619,7 +618,7 @@ most probably our application will crash if the memory address at arr + 25 is ou
 
 We've just sayd arr + 25? what does that mean? As we've seen before a variable is just some place in memmory, we can get it's memory address which is the first byte that is asigned to that variable in memory. With arrays is pretty much the same, for example since we know that an int occupies 4 bytes in memory, an array of 10 ints will occupy 40 bytes and those bytes are contiguous:
 
-<img src="images/array.svg" height="300"/>
+![Array](images/array.svg "")
 
 Remember that memory addresses are expressed as hexadecimal so 40 == 0x0028. Now to take the address of an array, as with other variable we might want to use the `&` operator and indeed we can do it like:
 
@@ -639,10 +638,10 @@ cout << "a: " << a << " arr: " << arr << endl;
 will print the same value for both a and arr. So an array is just a pointer to a memory address with the only difference that, that memory address is the beginning of reserved memory enough to allocate, in our case, 10 ints. All those ints will be one after another, so when we do `arr[5]` we are just accessing the value that is in the memory address of our array + the size of 5 ints. If our array started in `0x0010`, and ints ocupy `4 bytes`, arr[5] would be `10 + 4 * 5 = 30` which in hexadecimal is `0x001E`. We can actually do this in our code:
 
 ```cpp
-int arr[10]
+int arr[10];
 arr[5] = 20;
-cout << "&arr[5]: " << &arr[5] << "arr+5: " << arr+5 << endl
-cout << "arr[5]: " << arr[5] << "*(arr+5): " << *(arr+5) << endl
+cout << "&arr[5]: " << &arr[5] << "arr+5: " << arr+5 << endl;
+cout << "arr[5]: " << arr[5] << "*(arr+5): " << *(arr+5) << endl;
 ```
 
 now, that's really weird and most of the time you won't use it, it's called pointer arithmetic. The first cout will print the address in memory of the int at position 5 in the array in the first case using the `&` operator to get the address of `arr[5]` and in the second directly by adding 5 to the first address of `arr` doing `arr+5`. In the second cout we print the value at that memory location, using `arr[5]` or dereferencing the address `arr+5` using the `*` operator.
@@ -650,19 +649,19 @@ now, that's really weird and most of the time you won't use it, it's called poin
 Note that when we add `5` to the adress of the array it's not bytes we are adding but the size in bytes of the type it contains, in this case `+5` actually means `+20` bytes, you can check it by doing:
 
 ```cpp
-int arr[10]
+int arr[10];
 arr[5] = 7;
-cout << "arr: " << arr << "arr+5: " << arr+5 << endl
+cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
 ```
 
 and substracting the hexadecimal values in a calculator. If you try to substract them in your program like:
 
 
 ```cpp
-int arr[10]
+int arr[10];
 arr[5] = 20;
-cout << "arr: " << arr << "arr+5: " << arr+5 << endl
-cout << "(arr+5) - arr: " << (arr+5) - arr << endl
+cout << "arr: " << arr << "arr+5: " << arr+5 << endl;
+cout << "(arr+5) - arr: " << (arr+5) - arr << endl;
 ```
 
 You will end up with `5` again because as we've said pointer arithmetic works with the type size not bytes.
@@ -680,7 +679,7 @@ int arr[] = new int[10];
 or
 
 ```cpp
-int * arr = new int[10]
+int * arr = new int[10];
 ```
 
 As you can see this confirms what we've said before, an array variable is just a pointer, when we call `new int[10]` it allocates memory to store 10 integers and returns the memory address of the first byte of the first integer in the array, we can keep it in a pointer like in the second example or using `int arr[]` which declares an array of unkown size.
@@ -699,7 +698,7 @@ There's also some problems with the syntax of arrays, for example this:
 
 
 ```cpp
-int arr[10]
+int arr[10];
 int arrB[10];
 arrB = arr;
 ```
@@ -752,13 +751,13 @@ Vectors have some more features and using them properly might be tricky mostly i
 
 Having objects in memory one after another is most of the time what we want, the access is really fast no matter if we want to access sequentially to each of them or randomly to anyone, since a vector is just an array internally, accesing let's say position 20 in it, just means that internally it just needs to get the memory address of the first position and add 20 to it. In soime cases though, vectors are not the most optimal memory structure. For example, if we want to frequnetly add  or remove elements in the middle of the vector, and you imagine the vector as a memory strip, that means that we need to move the rest of the vector till the end one position to the right and then insert the new element in the free location. In memory there's no such thing as move, moving contiguous memory means copying it and as we've said before, copying memory is a relatively slow operation.
 
-<img src="images/vector_inserting.svg" height="300"/>
+![Vector inserting](images/vector_inserting.svg "")
 
 Sometimes, if there's not enough memory to move/copy the elements, one position to the right, the vector will need to copy the whole thing to a new memory location. If we are working with thousands of elements and doing this very frequently, like for example every frame, this can really slow things down a lot.
 
 To solve that, there's other memory structures like for example lists. In a list, memory, is not contiguous but instead each element has a pointer to the next and previous element so inserting one element just means changing those pointers to point to the newly added element. In a list we never need to move elements around but it's main disadvantage is that not being the elements contiguous in memory it's access can be slightly slower than a vector, also that we can't use it in certain cases like for example to upload data to the graphics card which always wants contiguos memory.
 
-<img src="images/list.svg" height="300"/>
+![List](images/list.svg "")
 
 Another problem of lists is that trying to access an element in the middle of the list (what is called random access) is slow since we always have to go through all the list till we arrive to the desired element. Lists are used then, when we seldom need to access randomly to a position of it and we need to add or remove elements in the middle frequently. For the specifics of the syntax of a list you can check the [c++ documentation on lists](http://www.cplusplus.com/reference/list/list/)
 
